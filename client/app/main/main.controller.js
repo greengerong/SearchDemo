@@ -4,12 +4,12 @@
 
   class MainController {
 
-    constructor($http) {
-      this.$http = $http;
+    constructor(studentServicehttp) {
+      this.studentService = studentService;
     }
 
-    search(name = '') {
-      return this.$http.get('/api/student', { params: { name } })
+    search(name) {
+      return studentService
         .then(response => {
           this.studentResult = response.data;
         });
