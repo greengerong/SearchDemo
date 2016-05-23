@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Component: mainComponent', function () {
+describe('Component: mainComponent', () => {
 
   beforeEach(module('com.github.greengerong.search'));
 
   let mainComponent;
 
-  beforeEach(inject(function ($componentController) {
+  beforeEach(inject($componentController => {
     mainComponent = $componentController('main');
   }));
 
-  it('should get students when search by student name', inject(function ($httpBackend) {
+  it('should get students when search by student name', inject($httpBackend => {
     let name = 'abc',
       response = {
         data: [{
@@ -29,7 +29,7 @@ describe('Component: mainComponent', function () {
     mainComponent.studentResult.should.deep.equal(response);
   }));
 
-  it('should get error when search api throw error', inject(function ($httpBackend) {
+  it('should get error when search api throw error', inject($httpBackend => {
     let name = 'abc',
       error = 'Service error!';
 
