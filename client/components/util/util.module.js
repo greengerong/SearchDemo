@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('searchDemoApp.util', []);
+angular.module('com.github.greengerong.search.util', []);

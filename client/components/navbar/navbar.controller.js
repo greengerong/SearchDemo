@@ -4,5 +4,5 @@ class NavbarController {}
 
 //end-non-standard
 
-angular.module('searchDemoApp')
+angular.module('com.github.greengerong.search')
   .controller('NavbarController', NavbarController);

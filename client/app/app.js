@@ -1,10 +1,16 @@
 'use strict';
 
-angular.module('searchDemoApp', ['searchDemoApp.constants', 'ngCookies', 'ngResource', 'ngSanitize',
-  'btford.socket-io', 'ui.router', 'ui.bootstrap'
+angular.module('com.github.greengerong.search', [
+  'com.github.greengerong.search.constants',
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'btford.socket-io',
+  'ui.router',
+  'ui.bootstrap'
 ])
   .config(function ($urlRouterProvider, $locationProvider) {
+    
     $urlRouterProvider.otherwise('/');
-
     $locationProvider.html5Mode(true);
   });

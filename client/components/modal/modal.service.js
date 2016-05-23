@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('searchDemoApp')
+angular.module('com.github.greengerong.search')
   .factory('Modal', function($rootScope, $uibModal) {
     /**
      * Opens a modal

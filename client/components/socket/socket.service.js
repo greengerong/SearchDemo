@@ -1,7 +1,7 @@
 /* global io */
 'use strict';
 
-angular.module('searchDemoApp')
+angular.module('com.github.greengerong.search')
   .factory('socket', function(socketFactory) {
     // socket.io now auto-configures its connection when we ommit a connection url
     var ioSocket = io('', {

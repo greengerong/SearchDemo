@@ -1,5 +1,5 @@
 (function(angular, undefined) {
-  angular.module("searchDemoApp.constants", [])
+  angular.module("com.github.greengerong.search.constants", [])
 
 .constant("appConfig", {
 	"userRoles": [

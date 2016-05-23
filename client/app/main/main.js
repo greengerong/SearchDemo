@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('searchDemoApp')
+angular.module('com.github.greengerong.search')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {

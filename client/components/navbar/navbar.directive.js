@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('searchDemoApp')
+angular.module('com.github.greengerong.search')
   .directive('navbar', () => ({
     templateUrl: 'components/navbar/navbar.html',
     restrict: 'E',

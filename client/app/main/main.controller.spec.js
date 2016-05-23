@@ -2,7 +2,7 @@
 
 describe('Component: mainComponent', function () {
 
-  beforeEach(module('searchDemoApp'));
+  beforeEach(module('com.github.greengerong.search'));
 
   let mainComponent;
 

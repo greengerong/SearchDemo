@@ -13,6 +13,6 @@
     }
   }
 
-  angular.module('searchDemoApp')
+  angular.module('com.github.greengerong.search')
       .service('studentService', StudentService);
 })();

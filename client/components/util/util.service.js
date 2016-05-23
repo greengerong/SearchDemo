@@ -57,6 +57,6 @@
     return Util;
   }
 
-  angular.module('searchDemoApp.util')
+  angular.module('com.github.greengerong.search.util')
     .factory('Util', UtilService);
 })();

@@ -15,7 +15,7 @@
     }
   }
 
-  angular.module('searchDemoApp')
+  angular.module('com.github.greengerong.search')
     .component('main', {
       templateUrl: 'app/main/main.html',
       controller: MainController

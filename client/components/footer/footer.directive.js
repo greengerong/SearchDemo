@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('searchDemoApp')
+angular.module('com.github.greengerong.search')
   .directive('footer', function() {
     return {
       templateUrl: 'components/footer/footer.html',
