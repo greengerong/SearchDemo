@@ -4,7 +4,6 @@ var studentService = require('./student.service');
 
 function respondWithResult(res, statusCode = 200) {
   return function (entity) {
-    console.log(statusCode, entity, '--------')
     res.status(statusCode).json(entity);
   };
 }
