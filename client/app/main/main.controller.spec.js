@@ -1,36 +1,44 @@
 'use strict';
 
-describe('Component: mainComponent', function() {
+describe('Component: mainComponent', function () {
 
-  // load the controller's module
   beforeEach(module('searchDemoApp'));
-  beforeEach(module('stateMock'));
-  beforeEach(module('socketMock'));
 
-  var scope;
-  var mainComponent;
-  var state;
-  var $httpBackend;
+  let mainComponent;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function(_$httpBackend_, $http, $componentController, $rootScope, $state,
-    socket) {
-    $httpBackend = _$httpBackend_;
-    $httpBackend.expectGET('/api/things')
-      .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
-
-    scope = $rootScope.$new();
-    state = $state;
-    mainComponent = $componentController('main', {
-      $http: $http,
-      $scope: scope,
-      socket: socket
-    });
+  beforeEach(inject(function ($componentController) {
+    mainComponent = $componentController('main');
   }));
 
-  it('should attach a list of things to the controller', function() {
-    mainComponent.$onInit();
+  it('should get students when search by student name', inject(function ($httpBackend) {
+    let name = 'abc',
+      response = {
+        data: [{
+          id: 1,
+          name,
+          age: 1
+        }],
+        total: 1
+      }
+
+    $httpBackend.expectGET('/api/student?name=' + name).respond(response);
+
+    mainComponent.search(name);
     $httpBackend.flush();
-    mainComponent.awesomeThings.length.should.equal(4);
-  });
+
+    mainComponent.studentResult.should.deep.equal(response);
+  }));
+
+  it('should get error when search api throw error', inject(function ($httpBackend) {
+    let name = 'abc',
+      error = 'Service error!';
+
+    $httpBackend.expectGET('/api/student?name=' + name).respond(500, error);
+
+    mainComponent.search(name);
+    $httpBackend.flush();
+
+    mainComponent.error.should.deep.equal(error);
+  }));
+
 });

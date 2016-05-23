@@ -4,15 +4,14 @@
 
   class MainController {
 
-    constructor(studentServicehttp) {
+    constructor(studentService) {
       this.studentService = studentService;
     }
 
     search(name) {
-      return studentService
-        .then(response => {
-          this.studentResult = response.data;
-        });
+      return this.studentService.search(name)
+        .then(response => this.studentResult = response.data)
+        .catch(error => this.error = error.data);
     }
   }
 

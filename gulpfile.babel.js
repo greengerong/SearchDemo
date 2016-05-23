@@ -40,13 +40,13 @@ const paths = {
     },
     server: {
         scripts: [
-          `${serverPath}/**/!(*.spec|*.integration).js`,
-          `!${serverPath}/config/local.env.sample.js`
+            `${serverPath}/**/!(*.spec|*.integration).js`,
+            `!${serverPath}/config/local.env.sample.js`
         ],
         json: [`${serverPath}/**/*.json`],
         test: {
-          integration: [`${serverPath}/**/*.integration.js`, 'mocha.global.js'],
-          unit: [`${serverPath}/**/*.spec.js`, 'mocha.global.js']
+            integration: [`${serverPath}/**/*.integration.js`, 'mocha.global.js'],
+            unit: [`${serverPath}/**/*.spec.js`, 'mocha.global.js']
         }
     },
     karma: 'karma.conf.js',
@@ -128,7 +128,7 @@ let styles = lazypipe()
     .pipe(plugins.sourcemaps.init)
     .pipe(plugins.sass)
 
-    .pipe(plugins.autoprefixer, {browsers: ['last 1 version']})
+    .pipe(plugins.autoprefixer, { browsers: ['last 1 version'] })
     .pipe(plugins.sourcemaps.write, '.');
 
 let transpileClient = lazypipe()
@@ -167,7 +167,7 @@ let istanbul = lazypipe()
             }
         },
         coverageDirectory: './coverage',
-        rootDirectory : ''
+        rootDirectory: ''
     });
 
 /********************
@@ -187,12 +187,12 @@ gulp.task('env:all', () => {
 });
 gulp.task('env:test', () => {
     plugins.env({
-        vars: {NODE_ENV: 'test'}
+        vars: { NODE_ENV: 'test' }
     });
 });
 gulp.task('env:prod', () => {
     plugins.env({
-        vars: {NODE_ENV: 'production'}
+        vars: { NODE_ENV: 'production' }
     });
 });
 
@@ -207,7 +207,7 @@ gulp.task('inject', cb => {
 gulp.task('inject:js', () => {
     return gulp.src(paths.client.mainView)
         .pipe(plugins.inject(
-            gulp.src(_.union(paths.client.scripts, [`!${clientPath}/**/*.{spec,mock}.js`, `!${clientPath}/app/app.js`]), {read: false})
+            gulp.src(_.union(paths.client.scripts, [`!${clientPath}/**/*.{spec,mock}.js`, `!${clientPath}/app/app.js`]), { read: false })
                 .pipe(plugins.sort(sortModulesFirst)),
             {
                 starttag: '<!-- injector:js -->',
@@ -220,7 +220,7 @@ gulp.task('inject:js', () => {
 gulp.task('inject:css', () => {
     return gulp.src(paths.client.mainView)
         .pipe(plugins.inject(
-            gulp.src(`${clientPath}/{app,components}/**/*.css`, {read: false})
+            gulp.src(`${clientPath}/{app,components}/**/*.css`, { read: false })
                 .pipe(plugins.sort()),
             {
                 starttag: '<!-- injector:css -->',
@@ -233,7 +233,7 @@ gulp.task('inject:css', () => {
 gulp.task('inject:scss', () => {
     return gulp.src(paths.client.mainStyle)
         .pipe(plugins.inject(
-            gulp.src(_.union(paths.client.styles, ['!' + paths.client.mainStyle]), {read: false})
+            gulp.src(_.union(paths.client.styles, ['!' + paths.client.mainStyle]), { read: false })
                 .pipe(plugins.sort()),
             {
                 transform: (filepath) => {
@@ -293,12 +293,12 @@ gulp.task('lint:scripts:serverTest', () => {
 });
 
 gulp.task('jscs', () => {
-  return gulp.src(_.union(paths.client.scripts, paths.server.scripts))
-      .pipe(plugins.jscs())
-      .pipe(plugins.jscs.reporter());
+    return gulp.src(_.union(paths.client.scripts, paths.server.scripts))
+        .pipe(plugins.jscs())
+        .pipe(plugins.jscs.reporter());
 });
 
-gulp.task('clean:tmp', () => del(['.tmp/**/*'], {dot: true}));
+gulp.task('clean:tmp', () => del(['.tmp/**/*'], { dot: true }));
 
 gulp.task('start:client', cb => {
     whenServerReady(() => {
@@ -328,7 +328,7 @@ gulp.task('start:inspector', () => {
 
 gulp.task('start:server:debug', () => {
     process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-        config = require(`./${serverPath}/config/environment`);
+    config = require(`./${serverPath}/config/environment`);
     nodemon(`-w ${serverPath} --debug-brk ${serverPath}`)
         .on('log', onServerLog);
 });
@@ -420,8 +420,8 @@ gulp.task('mocha:integration', () => {
 
 gulp.task('test:client', ['wiredep:test', 'constant'], (done) => {
     new KarmaServer({
-      configFile: `${__dirname}/${paths.karma}`,
-      singleRun: true
+        configFile: `${__dirname}/${paths.karma}`,
+        singleRun: true
     }, done).start();
 });
 
@@ -483,39 +483,39 @@ gulp.task('build', cb => {
         cb);
 });
 
-gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**`], {dot: true}));
+gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**`], { dot: true }));
 
 gulp.task('build:client', ['transpile:client', 'styles', 'html', 'constant', 'build:images'], () => {
     var manifest = gulp.src(`${paths.dist}/${clientPath}/assets/rev-manifest.json`);
 
-    var appFilter = plugins.filter('**/app.js', {restore: true});
-    var jsFilter = plugins.filter('**/*.js', {restore: true});
-    var cssFilter = plugins.filter('**/*.css', {restore: true});
-    var htmlBlock = plugins.filter(['**/*.!(html)'], {restore: true});
+    var appFilter = plugins.filter('**/app.js', { restore: true });
+    var jsFilter = plugins.filter('**/*.js', { restore: true });
+    var cssFilter = plugins.filter('**/*.css', { restore: true });
+    var htmlBlock = plugins.filter(['**/*.!(html)'], { restore: true });
 
     return gulp.src(paths.client.mainView)
         .pipe(plugins.useref())
-            .pipe(appFilter)
-                .pipe(plugins.addSrc.append('.tmp/templates.js'))
-                .pipe(plugins.concat('app/app.js'))
-            .pipe(appFilter.restore)
-            .pipe(jsFilter)
-                .pipe(plugins.ngAnnotate())
-                .pipe(plugins.uglify())
-            .pipe(jsFilter.restore)
-            .pipe(cssFilter)
-                .pipe(plugins.cleanCss({
-                    processImportFrom: ['!fonts.googleapis.com']
-                }))
-            .pipe(cssFilter.restore)
-            .pipe(htmlBlock)
-                .pipe(plugins.rev())
-            .pipe(htmlBlock.restore)
-        .pipe(plugins.revReplace({manifest}))
+        .pipe(appFilter)
+        .pipe(plugins.addSrc.append('.tmp/templates.js'))
+        .pipe(plugins.concat('app/app.js'))
+        .pipe(appFilter.restore)
+        .pipe(jsFilter)
+        .pipe(plugins.ngAnnotate())
+        .pipe(plugins.uglify())
+        .pipe(jsFilter.restore)
+        .pipe(cssFilter)
+        .pipe(plugins.cleanCss({
+            processImportFrom: ['!fonts.googleapis.com']
+        }))
+        .pipe(cssFilter.restore)
+        .pipe(htmlBlock)
+        .pipe(plugins.rev())
+        .pipe(htmlBlock.restore)
+        .pipe(plugins.revReplace({ manifest }))
         .pipe(gulp.dest(`${paths.dist}/${clientPath}`));
 });
 
-gulp.task('html', function() {
+gulp.task('html', function () {
     return gulp.src(`${clientPath}/{app,components}/**/*.html`)
         .pipe(plugins.angularTemplatecache({
             module: 'searchDemoApp'
@@ -523,19 +523,19 @@ gulp.task('html', function() {
         .pipe(gulp.dest('.tmp'));
 });
 
-gulp.task('constant', function() {
-  let sharedConfig = require(`./${serverPath}/config/environment/shared`);
-  return plugins.ngConstant({
-    name: 'searchDemoApp.constants',
-    deps: [],
-    wrap: true,
-    stream: true,
-    constants: { appConfig: sharedConfig }
-  })
-    .pipe(plugins.rename({
-      basename: 'app.constant'
-    }))
-    .pipe(gulp.dest(`${clientPath}/app/`))
+gulp.task('constant', function () {
+    let sharedConfig = require(`./${serverPath}/config/environment/shared`);
+    return plugins.ngConstant({
+        name: 'searchDemoApp.constants',
+        deps: [],
+        wrap: true,
+        stream: true,
+        constants: { appConfig: sharedConfig }
+    })
+        .pipe(plugins.rename({
+            basename: 'app.constant'
+        }))
+        .pipe(gulp.dest(`${clientPath}/app/`))
 });
 
 gulp.task('build:images', () => {
@@ -578,42 +578,42 @@ gulp.task('copy:server', () => {
         'package.json',
         'bower.json',
         '.bowerrc'
-    ], {cwdbase: true})
+    ], { cwdbase: true })
         .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('coverage:pre', () => {
-  return gulp.src(paths.server.scripts)
-    // Covering files
-    .pipe(plugins.istanbul({
-        instrumenter: Instrumenter, // Use the isparta instrumenter (code coverage for ES6)
-        includeUntested: true
-    }))
-    // Force `require` to return covered files
-    .pipe(plugins.istanbul.hookRequire());
+    return gulp.src(paths.server.scripts)
+        // Covering files
+        .pipe(plugins.istanbul({
+            instrumenter: Instrumenter, // Use the isparta instrumenter (code coverage for ES6)
+            includeUntested: true
+        }))
+        // Force `require` to return covered files
+        .pipe(plugins.istanbul.hookRequire());
 });
 
 gulp.task('coverage:unit', () => {
     return gulp.src(paths.server.test.unit)
         .pipe(mocha())
         .pipe(istanbul())
-        // Creating the reports after tests ran
+    // Creating the reports after tests ran
 });
 
 gulp.task('coverage:integration', () => {
     return gulp.src(paths.server.test.integration)
         .pipe(mocha())
         .pipe(istanbul())
-        // Creating the reports after tests ran
+    // Creating the reports after tests ran
 });
 
 gulp.task('mocha:coverage', cb => {
-  runSequence('coverage:pre',
-              'env:all',
-              'env:test',
-              'coverage:unit',
-              'coverage:integration',
-              cb);
+    runSequence('coverage:pre',
+        'env:all',
+        'env:test',
+        'coverage:unit',
+        'coverage:integration',
+        cb);
 });
 
 // Downloads the selenium webdriver
@@ -660,17 +660,17 @@ grunt.initConfig({
 
 grunt.loadNpmTasks('grunt-build-control');
 
-gulp.task('buildcontrol:heroku', function(done) {
+gulp.task('buildcontrol:heroku', function (done) {
     grunt.tasks(
         ['buildcontrol:heroku'],    //you can add more grunt tasks in this array
-        {gruntfile: false}, //don't look for a Gruntfile - there is none. :-)
-        function() {done();}
+        { gruntfile: false }, //don't look for a Gruntfile - there is none. :-)
+        function () { done(); }
     );
 });
-gulp.task('buildcontrol:openshift', function(done) {
+gulp.task('buildcontrol:openshift', function (done) {
     grunt.tasks(
         ['buildcontrol:openshift'],    //you can add more grunt tasks in this array
-        {gruntfile: false}, //don't look for a Gruntfile - there is none. :-)
-        function() {done();}
+        { gruntfile: false }, //don't look for a Gruntfile - there is none. :-)
+        function () { done(); }
     );
 });
