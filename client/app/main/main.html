@@ -1,0 +1,50 @@
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>'Allo, 'Allo!</h1>
+    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
+    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+  </div>
+</header>
+
+<div class="container">
+  <form class="thing-form">
+    <label>Search student by student name:</label>
+    <p class="input-group">
+      <input type="text" class="form-control" placeholder="Search name" ng-model="$ctrl.searchName">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="$ctrl.search($ctrl.searchName)">Search</button>
+      </span>
+    </p>
+  </form>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in $ctrl.studentResult.data">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.age}}</td>
+      </tr>
+      <tr ng-if="!$ctrl.studentResult.data">
+        <td colspan="3" class="empty-row">
+            No data to show!
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr ng-if="$ctrl.studentResult.data">
+        <td colspan="3">
+          <span class="pull-right">
+            Got {{$ctrl.studentResult.data.length}} matched from {{$ctrl.studentResult.total}} Records.
+          </span>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
