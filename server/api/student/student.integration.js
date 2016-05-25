@@ -1,147 +1,49 @@
 'use strict';
 
-var app = require('../..');
+let app = require('../..');
 import request from 'supertest';
+import studentSchema from '../../data/student-response-schema.json';
+import jsonschema from 'jsonschema';
 
-var newThing;
+let schemaValidator = new jsonschema.Validator();
 
-describe('Thing API:', function() {
+describe('Student API:', () => {
 
-  describe('GET /api/things', function() {
-    var things;
+  it('should got matched student when given search name query', (done) => {
+    let name = 'ran';
 
-    beforeEach(function(done) {
-      request(app)
-        .get('/api/things')
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          things = res.body;
-          done();
-        });
-    });
-
-    it('should respond with JSON array', function() {
-      things.should.be.instanceOf(Array);
-    });
-
+    request(app)
+      .get('/api/student?name=' + name)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        (!err).should.be.true;
+        schemaValidator.validate(res.body, studentSchema).valid.should.be.true;
+        done();
+      });
   });
 
-  describe('POST /api/things', function() {
-    beforeEach(function(done) {
-      request(app)
-        .post('/api/things')
-        .send({
-          name: 'New Thing',
-          info: 'This is the brand new thing!!!'
-        })
-        .expect(201)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          newThing = res.body;
-          done();
-        });
-    });
+  it('should got all student when given search name is empty', (done) => {
+    let name = '';
 
-    it('should respond with the newly created thing', function() {
-      newThing.name.should.equal('New Thing');
-      newThing.info.should.equal('This is the brand new thing!!!');
-    });
-
+    request(app)
+      .get('/api/student?name=' + name)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err, res) => {
+        (!err).should.be.true;
+        schemaValidator.validate(res.body, studentSchema).valid.should.be.true;
+        res.body.data.length.should.be.equal(res.body.total);
+        done();
+      });
   });
 
-  describe('GET /api/things/:id', function() {
-    var thing;
-
-    beforeEach(function(done) {
-      request(app)
-        .get('/api/things/' + newThing._id)
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          thing = res.body;
-          done();
-        });
-    });
-
-    afterEach(function() {
-      thing = {};
-    });
-
-    it('should respond with the requested thing', function() {
-      thing.name.should.equal('New Thing');
-      thing.info.should.equal('This is the brand new thing!!!');
-    });
-
-  });
-
-  describe('PUT /api/things/:id', function() {
-    var updatedThing;
-
-    beforeEach(function(done) {
-      request(app)
-        .put('/api/things/' + newThing._id)
-        .send({
-          name: 'Updated Thing',
-          info: 'This is the updated thing!!!'
-        })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          updatedThing = res.body;
-          done();
-        });
-    });
-
-    afterEach(function() {
-      updatedThing = {};
-    });
-
-    it('should respond with the updated thing', function() {
-      updatedThing.name.should.equal('Updated Thing');
-      updatedThing.info.should.equal('This is the updated thing!!!');
-    });
-
-  });
-
-  describe('DELETE /api/things/:id', function() {
-
-    it('should respond with 204 on successful removal', function(done) {
-      request(app)
-        .delete('/api/things/' + newThing._id)
-        .expect(204)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          done();
-        });
-    });
-
-    it('should respond with 404 when thing does not exist', function(done) {
-      request(app)
-        .delete('/api/things/' + newThing._id)
-        .expect(404)
-        .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
-          done();
-        });
-    });
-
+  afterEach((done) => {
+    let server = app.get('server');
+    if (!server.listening) {
+      return done();
+    }
+    server.close(done);
   });
 
 });
