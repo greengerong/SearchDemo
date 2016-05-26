@@ -5,6 +5,8 @@
 
 import config from './environment';
 
+
+/* istanbul ignore next */
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
 }
@@ -32,7 +34,7 @@ export default function(socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
-
+   /* istanbul ignore next */
   socketio.on('connection', function(socket) {
     socket.address = socket.request.connection.remoteAddress +
       ':' + socket.request.connection.remotePort;

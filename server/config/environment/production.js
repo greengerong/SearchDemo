@@ -1,5 +1,6 @@
 'use strict';
 
+/* istanbul ignore next */
 // Production specific configuration
 // =================================
 module.exports = {

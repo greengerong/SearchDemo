@@ -1,9 +1,10 @@
 'use strict';
-
+/* istanbul ignore next */
 var path = require('path');
 var _ = require('lodash');
 
 function requiredProcessEnv(name) {
+  /* istanbul ignore next */
   if (!process.env[name]) {
     throw new Error('You must set the ' + name + ' environment variable');
   }
