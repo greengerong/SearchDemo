@@ -116,7 +116,8 @@
         "dev": "gulp serve",
         "int": "gulp mocha:integration",
         "test:server": "gulp mocha:unit",
-        "test:client": "gulp test:client"
+        "test:client": "gulp test:client",
+        "converage": "open coverage/lcov-report/index.html"
     },
     "private": true
 }
