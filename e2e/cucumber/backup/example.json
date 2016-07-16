@@ -1,0 +1,50 @@
+{
+  "consumer": {
+    "name": "fooConsumer"
+  },
+  "provider": {
+    "name": "fooProvider"
+  },
+  "interactions": [
+    {
+      "description": "a request for Foos11",
+      "provider_state": "fooConsumer",
+      "request": {
+        "method": "get",
+        "path": "/foos",
+        "headers": {
+          "Accept": "*/*"
+        }
+      },
+      "response": {
+
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "value": 45
+          },
+          {
+            "value": 90
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}
+
+
+package.json
+
+"scripts": {
+"test": "NODE_ENV=test mocha --reporter list --recursive --compilers js:babel-core/register",
+"pact": "node pacts.js",
+"start": "node index.js"
+},
+
+

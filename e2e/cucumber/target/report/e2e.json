@@ -1,0 +1,92 @@
+[
+  {
+    "id": "Student-Search",
+    "name": "Student Search",
+    "description": "\nAs a user of Student System\nI want to seach student by his name\nSo that I can view his detail",
+    "line": 1,
+    "keyword": "Feature",
+    "uri": "/Users/rliu/work/github/SearchDemo/e2e/cucumber/src/features/student-search.feature",
+    "elements": [
+      {
+        "name": "Search student by name",
+        "id": "Student-Search;search-student-by-name",
+        "line": 7,
+        "keyword": "Scenario",
+        "description": "",
+        "type": "scenario",
+        "steps": [
+          {
+            "name": "user open student search system",
+            "line": 8,
+            "keyword": "Given ",
+            "result": {
+              "duration": 1530834626,
+              "status": "passed"
+            },
+            "match": {}
+          },
+          {
+            "name": "search a student with \"Liu\"",
+            "line": 9,
+            "keyword": "When ",
+            "result": {
+              "duration": 608772762,
+              "status": "passed"
+            },
+            "match": {}
+          },
+          {
+            "name": "get the detail of \"Liu Ran\"",
+            "line": 10,
+            "keyword": "Then ",
+            "result": {
+              "duration": 178999176,
+              "status": "passed"
+            },
+            "match": {}
+          }
+        ]
+      },
+      {
+        "name": "Search student by name",
+        "id": "Student-Search;search-student-by-name",
+        "line": 7,
+        "keyword": "Scenario",
+        "description": "",
+        "type": "scenario",
+        "steps": [
+          {
+            "name": "user open student search system",
+            "line": 8,
+            "keyword": "Given ",
+            "result": {
+              "duration": 916969337,
+              "status": "passed"
+            },
+            "match": {}
+          },
+          {
+            "name": "search a student with \"biao\"",
+            "line": 9,
+            "keyword": "When ",
+            "result": {
+              "duration": 589041855,
+              "status": "passed"
+            },
+            "match": {}
+          },
+          {
+            "name": "get the detail of \"Tu biao\"",
+            "line": 10,
+            "keyword": "Then ",
+            "result": {
+              "duration": 227832346,
+              "status": "passed"
+            },
+            "match": {}
+          }
+        ]
+      }
+    ]
+  }
+]

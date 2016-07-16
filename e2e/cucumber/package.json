@@ -1,0 +1,30 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "chromedriver": "^2.12.0",
+    "grunt": "~0.4.1"
+  },
+  "devDependencies": {
+    "cucumber": "0.7.0",
+    "js-yaml": "3.4.2",
+    "grunt-cucumber": "^0.3.0",
+    "protractor": "2.2.0",
+    "grunt-protractor-runner": "^2.1.0",
+    "protractor-cucumber": "^0.1.5",
+    "chai": "^1.9.1",
+    "grunt-run": "^0.4.0",
+    "chai-as-promised": "^4.1.1",
+    "grunt-mkdir": "^0.1.2",
+    "grunt-protractor-cucumber-html-report":"0.0.9"
+  },
+  "scripts": {
+    "update-webdriver": "node node_modules/protractor/bin/webdriver-manager update",
+	"start-selenium": "node node_modules/protractor/bin/webdriver-manager start"
+  }
+
+}
